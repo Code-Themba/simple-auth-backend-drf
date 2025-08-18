@@ -38,5 +38,10 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
+    objects = UserAccountManager()
+
+    USERNAME_FIELD ='username'
+    REQUIRED_FIELDS = ['username', ]
+
     def __repr__(self):
         return self.username
