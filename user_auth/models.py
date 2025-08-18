@@ -22,7 +22,8 @@ class UserAccountManager(BaseUserManager):
             username=username,
             password=password,
         )
-        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
         user.save(using=self.db)
         return user
     
@@ -32,5 +33,10 @@ class User(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=50, blank=False)
     email = models.EmailField(max_length=255, unique=True, blank=False)
     password = models.CharField(max_length=255, blank=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+
+    def __repr__(self):
+        return self.username
