@@ -1,4 +1,4 @@
-from datetime.datetime import timezone
+from datetime import timezone
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
@@ -32,5 +32,5 @@ class User(AbstractBaseUser):
     username = models.CharField(unique=True, max_length=50, blank=False)
     email = models.EmailField(max_length=255, unique=True, blank=False)
     password = models.CharField(max_length=255, blank=False)
-    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
-    updated_at = models.DateTimeField(auto_now_add=True,default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
