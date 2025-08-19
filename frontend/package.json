@@ -1,0 +1,20 @@
+{
+  "name": "simple-auth-frontend",
+  "version": "1.0.0",
+  "description": "Simple authentication system that uses JavaScript in the frontend to communicate with the backend server written in Python",
+  "license": "MIT",
+  "author": "Siyethemba Mnqotho",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
