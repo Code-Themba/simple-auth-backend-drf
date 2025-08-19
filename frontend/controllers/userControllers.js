@@ -1,10 +1,31 @@
 // method:  POST
 // url   :  /api/users/register/
 // access:  Public
-const registerUser = (req, res) => {
-  return res.status(201).json({
-    message: "User created!",
-  });
+const registerUser = async (req, res) => {
+  const { username, email, password } = req.body;
+  user = JSON.stringify({ username, email, password });
+  try {
+    const response = await fetch(`${process.env.API_URL}/api/users/register/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: user,
+    });
+    const data = await response.json();
+    console.log(data);
+    return res.status(201).json({
+      user: {
+        username: data.username,
+        email: data.email,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Error. Something Went Wrong!!",
+    });
+  }
 };
 
 // method:  Post
