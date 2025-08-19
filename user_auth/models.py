@@ -7,6 +7,10 @@ class UserAccountManager(BaseUserManager):
         if not email:
             raise ValueError("Please enter a valid email address.")
         
+
+        email = self.normalize_email(email=email)
+        email = email.lower()
+
         user = self.model(
             email=self.normalize_email(email),
             username=username,
@@ -34,7 +38,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True, blank=False)
     password = models.CharField(max_length=255, blank=False)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 
