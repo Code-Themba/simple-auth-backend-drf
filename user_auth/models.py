@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 class UserAccountManager(BaseUserManager):
-    def create(self, username, email, password=None):
+    def create_user(self, username, email, password=None):
         if not email:
             raise ValueError("Please enter a valid email address.")
         
@@ -40,7 +40,7 @@ class User(AbstractBaseUser):
 
     objects = UserAccountManager()
 
-    USERNAME_FIELD ='username'
+    USERNAME_FIELD ='email'
     REQUIRED_FIELDS = ['username', ]
 
     def __repr__(self):
