@@ -3,6 +3,11 @@
 // access:  Public
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
+  if(!username || !email || !password){
+    return res.status(400).json({
+      message: "Please fill in all fields"
+    })
+  }
   user = JSON.stringify({ username, email, password });
   try {
     const response = await fetch(`${process.env.API_URL}/api/users/register/`, {
@@ -13,7 +18,7 @@ const registerUser = async (req, res) => {
       body: user,
     });
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     return res.status(201).json({
       user: {
         username: data.username,
@@ -32,6 +37,12 @@ const registerUser = async (req, res) => {
 // url   :  /api/users/login
 // access:  Public
 const loginUser = (req, res) => {
+  const {email, password } = req.body;
+  if(!email || !password ){
+    return res.status(400).json({
+      message: "Please fill in all required fields!!!"
+    })
+  }
   return res.status(200).json({
     message: "User logged in successfully!!",
   });
