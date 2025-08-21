@@ -58,7 +58,6 @@ const loginUser = async (req, res) => {
     const data = await response.json();
     res.cookie("jwt", data, {
       httpOnly: true,
-      path: "/me",
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 30 * 1000,
       sameSite: "strict",
@@ -75,23 +74,30 @@ const loginUser = async (req, res) => {
 };
 
 // method:  GET
-// url   :  /api/users/me
+// url   :  /api/users/me/
 // access:  Private
 const getUserInfo = async (req, res) => {
   const { access } = req.cookies.jwt;
-  // console.log(access);
-  const response = await fetch(`http://${process.env.API_URL}/api/users/me/`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${access}`,
-    },
-  });
-  const data = await response.json();
-  console.log(data);
-  return res.status(200).json({
-    message: "User data retrieved!!!",
-  });
+  try {
+    const response = await fetch(`${process.env.API_URL}/api/users/me/`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${access}`,
+      },
+    });
+    const data = await response.json();
+    const user = {
+      username: data.username,
+      email: data.email,
+    };
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Error. Something Went Wrong!!",
+    });
+  }
 };
 
 module.exports = {
